@@ -19,17 +19,31 @@ them.
 An area of ground, defined by a map polygon on an Ordanance Survey base map, expressed in
 [Define Units here].
 
+## Land cover
+
+The type of land e.g. arable, scrub, water body.
+
 ## Land feature
 
-## Land cover
+Something that can be said about a portion of the land parcel e.g. A barn is here.
 
 ## Land use
 
+What the land is being used for e.g. growing corn. Like land cover but more specific.
+
 ## Action
+
+A single action a farmer can take such as 'plant winter cover crop'. If the farmer does this, the
+action has an associated payment rate.
 
 ## Legacy agreement
 
+An existing (at the point of application) agreement for SfI, Countryside stewardship etc.
+
 ## Eligibility rule
+
+A condition to determine if an applicant may apply for an action on a land parcel. The condition will
+check things such as compatible land cover and compatibility with legacy agreements.
 
 ```mermaid
 erDiagram
