@@ -3,4 +3,5 @@ geopandas
 jupyter
 beautifulsoup4
 requests
+openai
 
