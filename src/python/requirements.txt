@@ -1,0 +1,6 @@
+pydantic
+geopandas
+jupyter
+beautifulsoup4
+requests
+
