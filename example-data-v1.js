@@ -35,6 +35,7 @@ const actions = [
     landCoverWhitelist: ["arable"],
     stackableActionCodeAllowlist: ["CSAM1"],
     stackableActionCodeDenylist: ["CS"],
+    autoApprovalThreshold: 200,
   },
 ];
 
