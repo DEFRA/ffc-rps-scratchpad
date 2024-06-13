@@ -37,6 +37,8 @@ participant Orchestration
 participant Calculation
 activate Applicant
 Applicant->>UI: Start Application
+Applicant->>UI: Select land parcel
+Applicant->>UI: Select action 
 activate Orchestration
 UI-)Orchestration: New Application
 activate Calculation
@@ -48,6 +50,8 @@ UI->>Applicant: Display AA
 deactivate Orchestration
 deactivate Applicant
 Applicant->>UI: Choose area for action 
+Applicant->>UI: Apply for action
+
 ```
 
 # For demo
@@ -74,12 +78,14 @@ actor Applicant
 
 Applicant->>UI: Start Application
 UI->>Calculation: Get Land Parcels
+Calculation->>UI: Land parcels
 Applicant->>UI: Select actions
 Applicant->>UI: Select Parcel
 UI->>Calculation: Get Available Area
+Calculation->>UI: Available Area
 UI->>Applicant: Display AA
-Calculation->>UI: Available
 Applicant->>UI: Choose area for action
-Applicant->>UI: Apply
-
+UI->>Calculation: Calculate payment 
+Calculation->>UI: Payment amount
+UI->>Applicant: Display payment owed
 ```
