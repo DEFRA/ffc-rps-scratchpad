@@ -1,0 +1,6 @@
+feature_id,feature_type,below_moorland,in_sda,is_manmade,is_natural,is_historic,is_culvert,is_water_feature,has_vegetation,contains_water,requires_hefer
+1,ditch,true,false,true,false,false,false,false,true,true,true
+2,ditch,false,false,true,false,false,false,false,true,true,true
+3,ditch,true,false,true,false,false,false,false,false,true,true
+4,ditch,true,false,true,false,false,false,false,false,true,true
+5,historic_site,true,false,true,false,true,false,false,false,false,true

@@ -1,0 +1,100 @@
+{
+    "rules": [
+        {
+            "name": "moorland_required",
+            "field": "is_moorland",
+            "operator": "equal",
+            "value": "true",
+        },
+        {
+            "name": "not_sssi",
+            "field": "is_sssi",
+            "operator": "equal",
+            "value": "false",
+        },
+        {
+            "name": "historic_eligible",
+            "field": "feature.has_historic",
+            "operator": "equal",
+            "value": "true",
+        },
+        {
+            "name": "ditch_exists",
+            "field": "feature.feature_type",
+            "operator": "equal",
+            "value": "ditch",
+        },
+        {
+            "name": "ditch_boundary_below_moorline",
+            "field": [
+                "feature.feature_type",
+                "feature.below_moorline"
+            ],
+            "operator": [
+                "equal",
+                "equal"
+            ],
+            "value": [
+                "ditch",
+                "false"
+            ],
+        },
+        {
+            "name": "ditch_not_in_SDA",
+            "field": [
+                "feature.feature_type",
+                "feature.is_sda"
+            ],
+            "operator": [
+                "equal",
+                "equal"
+            ],
+            "value": [
+                "ditch",
+                "false"
+            ],
+        },
+        {
+            "name": "has_historic_feature",
+            "field": [
+                "feature.feature_type",
+                "feature.is_historic"
+            ],
+            "operator": [
+                "equal",
+                "equal"
+            ],
+            "value": [
+                "historic",
+                "true"
+            ],
+        },
+        {
+            "name": "historic_eligible",
+            "field": "requires_hefer",
+            "operator": "equal",
+            "value": "true",
+        },
+    ],
+    "policies": {
+        {
+            "name": "ML1",
+            "rules": [
+                "moorland_required",
+                "not_sssi",
+                "historic_eligible",
+            ]
+        },
+        {
+            "name": "wbd1-manage-ditches",
+            "rules": [
+                "ditch_exists",
+                "ditch_below_moorline",
+                "ditch_not_in_SDA",
+                "ditch_is_manmade",
+                "ditch_not_culvert",
+                "ditch_has_vegetation",
+                "ditch_contains_water",
+                "stream_is_natural",
+                "not_water_feature",
+            }
