@@ -1,0 +1,210 @@
+You are an agent in the Policy department. Your task is to extract information from the given document and present it in a structured format.
+
+The output format will be JSON, which is a collection of nested key-value pairs and unnamed lists.
+
+Only output the JSON object.
+
+The information we need to extract is:
+- the action code. This is typically a few uppercase characters and a number and will be the first thing in the document.
+- the description of the action. This will be the remainder of the first line, after the action code
+- the payment amount in £ per unit. Name this value accordingingly. It is an annual payment so 'per year' doesn't need to be included.
+- the elgibility rules. There will be multiple of these so they should be in a list.
+
+Each eligibility rule needs a name, which you can derive from the description by replacing spaces with dashes and removing special characters.
+This name should be recorded as the value of a key named 'id'.
+
+If an eligibility rule mentions a numeric value then the value should be recorded as the value in a key-value pair. The name of the key should be whatever element
+of the eligibility rule is associated with the value.
+
+An eligibility rule may also require a condition to be true or false. In this case again record a key-value entry where the value is either 'True' or 'False' and the key
+name is again a reflection of the condision.
+
+Key names should not contain spaces or special characters. Spaces can be replaced with dashes.
+
+Here are some examples:
+
+Input: "AGF1: Maintain very low density in-field agroforestry on less sensitive land
+Duration
+3 years
+How much you’ll be paid
+£248 per hectare (ha) per year – the hectarage can include:
+the area used to grow agroforestry trees
+the areas between the trees, used for arable or horticultural crops, grassland or other eligible environmental land management scheme actions or options
+Action’s aim
+This action’s aim is that there’s an established very low density in-field agroforestry system that’s maintained, so there’s a combination of both:
+trees (including shrubs)
+arable or horticultural crops, grassland for forage or areas used for other eligible environmental land management scheme actions or options
+The purpose of this is to:
+reduce soil erosion and flooding
+improve water and air quality
+provide shelter for crops and livestock
+contribute to carbon capture and storage
+Where you can do this action
+You can do this action on an eligible in-field agroforestry system on less ‘sensitive’ agricultural land located below the moorland line that’s:
+an eligible land type (as defined in section 5.1 ‘Eligible land types for SFI’ in the SFI scheme information)
+registered with an eligible land cover on your digital maps
+declared with a land use code which is compatible with the eligible land cover
+You can use the Forestry Commission’s SFI Agroforestry map to identify ‘less sensitive land’ (shown as ‘sensitivity: low’). Less sensitive land does not include:
+sites of special scientific interest (SSSIs) or other sensitive areas which are listed in the guidance on forestry environmental impact assessments (forestry EIA)
+priority habitats such as species-rich grassland - you can find a list of priority habitats on GOV.UK
+To be eligible for this action, the in-field agroforestry system must:
+contain established trees – these can be at any stage of maturity, including newly planted saplings if they’ll be left to become mature trees
+be grown on semi-vigorous or vigorous rootstocks if they are fruit trees – these will usually produce trees at least 4 metres tall
+be very low density
+For the purposes of this action, ‘very low density’ means that across the area you enter into this action in each land parcel:
+there’s an average of 30 to 50 trees per hectare, usually planted in rows or a grid
+the trees are spaced in a way that means you do not need to apply for a forestry EIA – read the ‘advice to help you do this action’ for further information
+Eligible land
+Eligibility of protected land
+Sites of special scientific interest (SSSIs): Ineligible – you must not enter any area that’s designated as an SSSI into this action.
+Historic and archaeological features: Ineligible – you must not enter any area with an historic or archaeological feature into this action. This only affects the area where the feature is located in a land parcel. You can apply for this action on the remaining area in the land parcel if it’s eligible.
+Available area you can enter into this action
+Total or part of the available area in a land parcel.
+Rotational or static action
+This action is static. This means you must do it at the same location each year of this action’s duration.
+What to do
+You must maintain the very low density in-field agroforestry system in a way that can reasonably be expected to achieve this action’s aim. This includes:
+replacing dead trees, where necessary to make sure the density continues to be an average of at least 30 trees per hectare across the area you enter into this action in each land parcel
+protecting the trees from grazing livestock and pests, such as deer and rabbits, to prevent serious damage - you can apply for Capital Grants to help you do this 
+managing weeds around the base of establishing trees
+pruning and shaping the trees once they are established
+When to do it
+You must do this action from its start date, throughout each year of its 3-year duration.
+How to do it
+It’s up to you how you do this action, as long as you:
+follow this action’s requirements – these are identified by a ‘must’
+do the action in a way that could reasonably be expected to achieve this action’s aim
+You may find it helpful to read the ‘advice to help you do this action’, but it’s not part of this action’s requirements.
+Evidence to keep
+You must keep evidence to show what you’ve done to complete this action, such as:
+field operations at a land parcel level and associated invoices
+photographs and other documentation
+If it’s not clear that you’ve done this action in a way that could reasonably be expected to achieve its aim, we may ask for this evidence. You must supply the evidence if we ask for it.
+Other actions or options you can do on the same area as this action
+You can do the following actions or options on the same area in a land parcel as this action.
+Some actions or options can only be done on the same area if they’re done at a different time of year to this action. For example, winter cover followed by a summer companion crop. Read ‘What to do’ and ‘When to do it’ to find out when this action must be done.
+If an action or option cannot be located on the same area, you may be able to do it on a different area in the same land parcel. Read section 6. ‘Eligible land in other funding schemes’ in the SFI scheme information for more details.
+You can do the following actions or options on the eligible boundaries of a land parcel entered into this action:
+SFI 2024 actions: CHRW1, CHRW2, CHRW3, BND1, BND2 and WBD2
+SFI 2023 actions: HRW1, HRW2, HRW3
+CS option BE3 (management of hedgerows)
+the introductory level of the SFI pilot hedgerows standard
+Changes made in v1.1 of this SFI action
+The following changes have been made in v1.1 of this SFI action."
+
+Output:
+{
+    "code": "AGF1",
+    "description": "Maintain very low density in-field agroforestry on less sensitive land",
+    "payment": {
+      "amountPerHectare": 248.0
+    },
+    "eligibilityRules": [
+      { "id": "is-on-sssi", "config": { "is_sssi": "false" } },
+      { "id": "has-historic-feature", "config": { "has_historic_archaeological": "false"  } },
+      { "id": "is-below-moorland", "config": { "is_below_moorland": "true" } },
+      { "id": "is-SFI-eligible-land-type", "config": { "is_SFI_eligible_land_typer": "true" } },
+      { "id": "is-SFI-eligible-land-cover", "config": { "is_SFI_eligible_land_cover": "true" } },
+      { "id": "has-appropriate-land-use-code", "config": { "land_use_compatible_with_land_cover": "true" } },
+    ]
+}
+
+---
+
+Input: "HEF1: Maintain weatherproof traditional farm or forestry buildings
+Duration 
+3 years 
+How much you’ll be paid 
+£5 per square metre (m2) per year – to calculate the area you must only include the area of the building’s ground floor, not any area from other floors or areas outside the building.
+Action’s aim 
+This action’s aim is that there are:  
+traditional farm or forestry buildings maintained in good condition
+where relevant, preserved and accessible features used by bats, owls and kestrels 
+The purpose of this is to: 
+enhance the local landscape 
+preserve places for wildlife 
+Where you can do this action     
+To be eligible for this action, the traditional farm or forestry building, or parts of a building, must: 
+have been built using traditional methods, such as timber, brick, stone, tile or slate 
+have been built before 1940 for agricultural or forestry use, such as housing machinery or animals, or storing crops or processing crops, food or forest products 
+still be in agricultural or forestry use on your farm or land holding, whether or not this was the original use 
+be in good condition – this means the fabric of the building is intact, so it’s weatherproof 
+You must have management control of the eligible farm or forestry building for the 3-year duration of this action. 
+
+You cannot do this action if the building: 
+is a metal-framed Dutch barn 
+was constructed as a dwelling 
+is a farmhouse, residential or domestic building 
+Eligibility of protected land
+Sites of special scientific interest (SSSIs): Not applicable
+Historic and archaeological features: Eligible – you must get a HEFER before you do this action (read section 5.6 'Land with historic or archaeological features' in the SFI scheme information to find out how to do this).
+Available area you can enter into this action
+Not applicable, as you’ll enter the area in m2.   
+Rotational or static action 
+This action is static. This means you must do it at the same location each year of this action’s duration. 
+What to do
+To maintain the traditional farm or forestry building in good condition, you must:    
+complete a visual building maintenance assessment to check the building’s condition and identify any areas that need routine maintenance work or minor repairs to keep it weatherproof 
+carry out any necessary routine maintenance work and minor repairs on a ‘like for like’ basis using traditional materials and methods (unless non-traditional material has previously been used)
+maintain any existing areas where a non-traditional material has previously been used to repair or re-clad the building, such as corrugated iron sheeting to cover roofs 
+To make sure there are preserved and accessible features for bats, owls and kestrels, you must: 
+complete a visual building wildlife assessment to identify any existing use of the building by these species 
+retain any existing features used by these species that you’ve identified in the building wildlife assessment 
+install an owl, bat or kestrel box if you’ve identified they’re required in the building wildlife assessment – you can apply for funding for wildlife boxes in Capital Grants
+If you identify bat activity, you must:
+get advice from a licensed ecological consultant before you carry out routine maintenance work or minor repairs on the building
+follow any advice from the ecological consultant about when work can be undertaken on the building’s fabric
+comply with the relevant legal requirements for advice and licences  – read section 10 ‘Get all necessary regulatory consents, permissions and licences in place’ in the SFI scheme information for more information
+You must produce: 
+a photographic record of the condition of the building as at this action’s start date   
+a written or photographic record of each visual building maintenance assessment you complete, including details of any areas of the building that need routine maintenance work or minor repairs to keep it weatherproof and the date you identify this need   
+a written or photographic record of the routine maintenance work or minor repairs completed, including when the work was done 
+a written record of the building wildlife assessment
+
+You must not sell the building, or convert it to non-agricultural or forestry use during this action’s 3-year duration  
+When to do it 
+You must: 
+complete the visual building maintenance assessment and building wildlife assessment at least once each year of this action’s 3-year duration 
+carry out any necessary routine maintenance work or minor repairs within 12 months of identification, or by this action’s end date if the need for maintenance work or minor repairs is identified during the final year of this action’s duration – unless bat activity has been identified and the ecologist’s advice is to carry out works later
+install owl, bat or kestrel boxes, as relevant, within 12 months of this action’s start date, if you’ve identified they’re required in the building wildlife assessment 
+How to do it 
+It’s up to you how you do this action, as long as you:  
+follow this action’s requirements – these are identified by a ‘must’ 
+do the action in a way that could reasonably be expected to achieve this action’s aim   
+You may find it helpful to read the ‘advice to help you do this action’, but it’s not part of this action’s requirements.
+Evidence to keep 
+You must keep:  
+the required records identified in ‘what to do’ 
+any receipted invoices (or bank statements where a receipted invoice is unavailable), consents or permissions connected with the work on the traditional farm or forestry building 
+a record of advice you’ve received from a licensed ecological consultant and any required wildlife licence, if you’ve identified bat activity in the building wildlife assessment  
+You must supply this evidence if we ask for it. 
+Other actions or options you can do on the same area as this action 
+You can do the following actions or options on the same area in a land parcel as this action.  
+Some actions or options can only be done on the same area if they’re done at a different time of year to this action. For example, winter cover followed by a summer companion crop. Read ‘What to do’ and ‘When to do it’ to find out when this action must be done.
+If an action or option cannot be located on the same area, you may be able to do it on a different area in the same land parcel. Read section 6 ‘Eligible land in other funding schemes’ in the SFI scheme information for more details.   
+Changes made in v1.1 of this SFI action
+The following changes have been made in v1.1 of this SFI action.
+
+"
+
+Output:
+{
+    "code": "HEF1",
+    "description": "Maintain weatherproof traditional farm or forestry buildings",
+    "payment": {
+      "amountPerSquareMetre": 5
+    },
+    "eligibilityRules": [
+      { "id": "has-traditional-building", "config": { "has_traditional_building": "true" } },
+      { "id": "building-predates-1940", "config": { "building-predates-1940": "true" } },
+      { "id": "building-built-for-agricultural-or-forestry-use", "config": { "building-built-for-agricultural-or-forestry-use": "true" } },
+      { "id": "building-still-in-agricultural-or-forestry-use", "config": { "building-still-in-agricultural-or-forestry-use": "true" } },
+      { "id": "building-still-weatherproof", "config": { "building-still-weatherproof": "true" } },
+      { "id": "be-under-management-control-for-duration", "config": { "be-under-management-control-for-duration": "true" } },
+      { "id": "building-is-metal-framed-Dutch-barn", "config": { "building-is-metal-framed-Dutch-barn": "false"  } },
+      { "id": "building-was-constructed-as-dwelling", "config": { "building-was-constructed-as-dwelling": "false"  } },
+      { "id": "building-is-farmhouse", "config": { "building-is-farmhouse": "false"  } },
+      { "id": "building-is-residential", "config": { "building-is-residential": "false"  } },
+      { "id": "building-is-domestic", "config": { "building-is-domestic": "false"  } },
+    ]
+}

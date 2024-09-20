@@ -2,4 +2,4 @@
 .venv/
 
 openai.yaml
-
+**/OAI_CONFIG_LIST
