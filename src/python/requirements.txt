@@ -8,3 +8,7 @@ openai
 langchain
 langchain_openai
 seaborn
+scikit-learn
+pyautogen
+python-docx
+odfdo

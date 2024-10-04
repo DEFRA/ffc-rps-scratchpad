@@ -20,6 +20,10 @@ historic_codes = [
     'WD4', 'WD5', 'WD6', 'WT1', 'WT10', 'WT2', 'WT6', 'WT7', 'WT8', 'WT9',
     ]
 
+all_CS = ['BE3', 'CSTEST1', 'CSTEST2', 'CSTEST3']
+
+all_SFI_2023 = ['HRW1', 'HRW2', 'HRW3', '2023TEST1', '2023TEST2', '2023TEST3']
+
 class ActionCodeProcessingResult(BaseModel):
     """A named tuple of (list of codes identified, list of remaining unidentified items), to be used as a fallthrough."""
     codes: list[str]
@@ -74,6 +78,15 @@ class ActionCodes(BaseModel):
             items = [item.strip() for item in items]
         else:
             items = instr.strip()
+
+        # because of the way python considers strings as lists of chars, if there's only one string in the list the
+        # for loop will iterate over characters. We avoid this by adding a sentinel string to the list
+
+        print(f"  Items split into {items}")
+
+        if len(items) == 1:
+            items.append('SENTINEL')
+
         return items
 
     def check_for_none(self, instr: str):
@@ -88,16 +101,18 @@ class ActionCodes(BaseModel):
         else:
             return instr
 
-    def match_all_category(self, items: str, expandable_string: str, category: str):
+    def match_all_category(self, items: str, expandable_string: str, category: str = None):
         extracted_codes = []
         remnant = []
 
-        codes_in_category = self.known_codes.get(category, [])
+        print(f"  match_all_category received items: {items}")
+
+        codes_in_category = self.known_codes.get(category, self._all_known_codes)
         for item in items:
             # if the item matches an expandable string we expand it, add it to the list and move on
             if item == expandable_string:
                 extracted_codes.extend(codes_in_category)
-            elif item.startswith("All ES codes except"):
+            elif item.startswith(expandable_string + " except"):
                 string_of_items_to_exclude = item.split("except")[1].strip()
                 exclusions = string_of_items_to_exclude.split(" ").strip()
                 expanded_codes = list(set(codes_in_category) - set(exclusions))
@@ -127,87 +142,32 @@ class ActionCodes(BaseModel):
             return None
         # now split the items and run all the extraction methods against the list, consuming as we go
         items = self.split_instr(instr)
+        print(f"  Split into: {items}")
         found_codes = []
 
+        print(f"- Items: {items}")
         result = self.extract_codes_from_items(items)
-        print(f"Extracted codes {result.codes}, remaining {result.remnant}")
+        print(f"- Extracted codes {result.codes}")
+        print(f"  remaining {result.remnant}")
         found_codes.extend(result.codes)
 
-        result = self.match_all_category(result.remnant, expandable_string='All ES codes', category='ES')
-        print(f"Expanded codes {result.codes}, remaining {result.remnant}")
+        print(f"- Items: {result.remnant}")
+        result = self.match_all_category(result.remnant, expandable_string='All ES revenue options', category='ES')
+        print(f"- Expanded codes {result.codes}")
+        print(f"  remaining {result.remnant}")
         found_codes.extend(result.codes)
 
-        return found_codes
+        print(f"- Items: {result.remnant}")
+        result = self.match_all_category(result.remnant, expandable_string='All SFI 2023 actions', category='SFI2023')
+        print(f"- Expanded codes {result.codes}")
+        print(f"  remaining {result.remnant}")
+        found_codes.extend(result.codes)
 
+        print(f"- Items: {result.remnant}")
+        result = self.match_all_category(result.remnant, expandable_string='All CS management options', category='CS')
+        print(f"- Expanded codes {result.codes}")
+        print(f"  remaining {result.remnant}")
+        found_codes.extend(result.codes)
 
-
-    # def process_string(self, instr: str, category: str):
-    #     res = self.check_for_none(instr)
-    #     if res is None:
-    #         print("No codes to extract")
-    #         return None
-    #     # now we split up the string by commas and consume items either by matching them to the known codes or expanding text into lists of know codes
-    #     # as a code or a description are consumed we need to remove them from the list so we can check what's left and add more methods accordingly
-    #     items = self.split_instr(instr)
-    #     res = self.match_all_ES(instr)
-
-    #     res = self.extract_codes_from_string(items)
-    #     if res.hasResults():
-    #         self.codes[category] = res.codes
-    #         print(f"Added {res.codes} as category {category}")
-    #     if res.hasRemainingText():
-    #         print(f"Unable to process remaining text {res.remnant}")
-    #     return None
-
-
-
-    # def extract_codes_from_string(self, items: list[str]):
-    #     """Extracts any valid codes from the supplied string and returns that and the remainder."""
-
-    #     # populate the output list
-    #     # we'll just output the whole lot in one list for now. Later we can output a list per category
-    #     codes = []
-    #     remnant = []
-    #     # first split by comma
-    #     items = instr.split(",")
-    #     items = [item.strip() for item in items]
-    #     return ActionCodeProcessingResult([], items)
-
-    #     for item in items:
-    #         if item.upper() in self._all_codes:
-    #             codes.append(item)
-    #         else:
-    #             remnant.append(item)
-    #     return ActionCodeProcessingResult(codes=codes, remnant=remnant)
-
-    # def process_string(self, instr: str)
-    #     # first check for none
-    #     res = self._check_for_none(instr)
-    #     if res.
-
-    # def process_string(self, instr: str):
-    #     """Sequences through the various other class methods to determine codes from the input string."""
-    #     result = self._check_for_none(instr)
-    #     if result.hasRemainingText():
-    #         print(f"Unable to fully parse description, remainder: {result.remnant}")
-    #         return codes
-    #     codes = []
-    #     result = self.extract_codes_from_string(result.remnant)
-    #     codes.extend(result.codes)
-
-
-
-
-
-
-# new approach:
-
-#     self.codes
-#     self.remnant
-
-
-#     first check for none
-#     then split up
-
-#     then the methods
-#     don't need the special class
+        final_res = ActionCodeProcessingResult(codes=found_codes, remnant=result.remnant)
+        return final_res

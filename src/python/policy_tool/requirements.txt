@@ -1,0 +1,6 @@
+autogen
+
+fastapi[standard]
+uvicorn
+python-multipart
+flaml[automl]
