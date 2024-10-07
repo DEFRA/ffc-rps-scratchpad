@@ -1,0 +1,210 @@
+{
+	"info": {
+		"_postman_id": "fea94c50-2fda-4350-8606-80caa14eda62",
+		"name": "ArcGIS",
+		"description": "## Overview\n\nThis collection provides calls to the Geometry service to get -\n\n- the areas and lengths of a given array of polygons\\*\n    \n- the remaining area/s left over from an intersection of a given polygon over an existing array of polygons\n    \n\nGET endpoints are given in this collection for these, although POSTs are available.\n\nNote the query parameters are url encoded [https://www.url-encode-decode.com/](https://www.url-encode-decode.com/) can help with this. The advantage of using a GET is that the request can be posted into a URL where ArcGIS visualises the inputs into a form.\n\n<img src=\"https://content.pstmn.io/7e8966f1-7b9f-4fb5-8604-5e053825b0c0/Z2VvbWV0cnkgc2VydmVyLnBuZw==\" alt=\"\">\n\n## Public vs organisation specific URLs\n\nThe URLs used by these requests are from the ArcGIS **public** API e.g.\n\n[https://utility.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer/intersect](https://utility.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer/intersect)\n\nThese do not require authentication and are intended for open non/limited commercial use.\n\nA 'self' endpoint is included in the collection which is organisation specific and requires a token. Organisation specific endpoints require authentication e.g\n\n[https://my-org.maps.arcgis.com/arcgis/rest/services/Geometry/GeometryServer/intersect](https://my-org.maps.arcgis.com/arcgis/rest/services/Geometry/GeometryServer/intersect)\n\nThese are more performant and are designed for commercial use. They can also access private data within the organisation account.\n\n[link to developer documentation](https://developers.arcgis.com/documentation/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8442851"
+	},
+	"item": [
+		{
+			"name": "Token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						},
+						{
+							"key": "f",
+							"value": "json",
+							"type": "text"
+						},
+						{
+							"key": "referer",
+							"value": "*",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://www.arcgis.com/sharing/rest/generateToken",
+					"protocol": "https",
+					"host": [
+						"www",
+						"arcgis",
+						"com"
+					],
+					"path": [
+						"sharing",
+						"rest",
+						"generateToken"
+					]
+				},
+				"description": "Documentation [here](https://developers.arcgis.com/rest/enterprise-administration/server/generatetoken/)"
+			},
+			"response": []
+		},
+		{
+			"name": "Self",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://psicomheavyindus.maps.arcgis.com/sharing/rest/content/users/farmer_johnny?f=json&token={{token}}",
+					"protocol": "https",
+					"host": [
+						"psicomheavyindus",
+						"maps",
+						"arcgis",
+						"com"
+					],
+					"path": [
+						"sharing",
+						"rest",
+						"content",
+						"users",
+						"farmer_johnny"
+					],
+					"query": [
+						{
+							"key": "f",
+							"value": "json"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						}
+					]
+				},
+				"description": "add link ere"
+			},
+			"response": []
+		},
+		{
+			"name": "Areas and lengths",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://utility.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer/areasAndLengths?sr=102009&polygons=%5B%7B%22rings%22%3A%5B%5B%5B-628833%2C206205%5D%2C%5B-630269%2C192298%5D%2C%5B-631848%2C173991%5D%2C%5B-616471%2C341822%5D%2C%5B-620213%2C301450%5D%2C%5B-625923%2C237538%5D%2C%5B-628833%2C206205%5D%5D%5D%7D%2C%7B%22rings%22%3A%5B%5B%5B0%2C0%5D%2C%5B0%2C100000%5D%2C%5B100000%2C100000%5D%2C%5B100000%2C0%5D%2C%5B0%2C0%5D%5D%5D%7D%5D&lengthUnit=9035&areaUnit=%7B%22areaUnit%22%3A%22esriAcres%22%7D&calculationType=preserveShape&f=json",
+					"protocol": "https",
+					"host": [
+						"utility",
+						"arcgisonline",
+						"com"
+					],
+					"path": [
+						"arcgis",
+						"rest",
+						"services",
+						"Geometry",
+						"GeometryServer",
+						"areasAndLengths"
+					],
+					"query": [
+						{
+							"key": "sr",
+							"value": "102009"
+						},
+						{
+							"key": "polygons",
+							"value": "%5B%7B%22rings%22%3A%5B%5B%5B-628833%2C206205%5D%2C%5B-630269%2C192298%5D%2C%5B-631848%2C173991%5D%2C%5B-616471%2C341822%5D%2C%5B-620213%2C301450%5D%2C%5B-625923%2C237538%5D%2C%5B-628833%2C206205%5D%5D%5D%7D%2C%7B%22rings%22%3A%5B%5B%5B0%2C0%5D%2C%5B0%2C100000%5D%2C%5B100000%2C100000%5D%2C%5B100000%2C0%5D%2C%5B0%2C0%5D%5D%5D%7D%5D"
+						},
+						{
+							"key": "lengthUnit",
+							"value": "9035"
+						},
+						{
+							"key": "areaUnit",
+							"value": "%7B%22areaUnit%22%3A%22esriAcres%22%7D"
+						},
+						{
+							"key": "calculationType",
+							"value": "preserveShape"
+						},
+						{
+							"key": "f",
+							"value": "json"
+						}
+					]
+				},
+				"description": "Documentation available [here](https://developers.arcgis.com/rest/services-reference/enterprise/areas-and-lengths/)"
+			},
+			"response": []
+		},
+		{
+			"name": "Intersect",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://tasks.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer/intersect?sr=102009&geometries=%7B%0D%0A++%22geometryType%22%3A+%22esriGeometryPolygon%22%2C%0D%0A++%22geometries%22%3A+%5B%0D%0A++++%7B%0D%0A++++++%22rings%22%3A+%5B%0D%0A++++++++%5B%0D%0A++++++++++%5B-117.1956%2C+34.0564%5D%2C%0D%0A++++++++++%5B-117.184%2C+34.0564%5D%2C%0D%0A++++++++++%5B-117.184%2C+34.0486%5D%2C%0D%0A++++++++++%5B-117.1956%2C+34.0486%5D%2C%0D%0A++++++++++%5B-117.1956%2C+34.0564%5D%0D%0A++++++++%5D%0D%0A++++++%5D%0D%0A++++%7D%0D%0A++%5D%0D%0A%7D%0D%0A&geometry=%7B%0D%0A++%22geometryType%22%3A+%22esriGeometryPolygon%22%2C%0D%0A++%22geometry%22%3A+%7B%0D%0A++++%22rings%22%3A+%5B%0D%0A++++++%5B%0D%0A++++++++%5B-117.190%2C+34.054%5D%2C%0D%0A++++++++%5B-117.182%2C+34.054%5D%2C%0D%0A++++++++%5B-117.182%2C+34.050%5D%2C%0D%0A++++++++%5B-117.190%2C+34.050%5D%2C%0D%0A++++++++%5B-117.190%2C+34.054%5D%0D%0A++++++%5D%0D%0A++++%5D%0D%0A++%7D%0D%0A%7D%0D%0A&f=json",
+					"protocol": "https",
+					"host": [
+						"tasks",
+						"arcgisonline",
+						"com"
+					],
+					"path": [
+						"arcgis",
+						"rest",
+						"services",
+						"Geometry",
+						"GeometryServer",
+						"intersect"
+					],
+					"query": [
+						{
+							"key": "sr",
+							"value": "102009"
+						},
+						{
+							"key": "geometries",
+							"value": "%7B%0D%0A++%22geometryType%22%3A+%22esriGeometryPolygon%22%2C%0D%0A++%22geometries%22%3A+%5B%0D%0A++++%7B%0D%0A++++++%22rings%22%3A+%5B%0D%0A++++++++%5B%0D%0A++++++++++%5B-117.1956%2C+34.0564%5D%2C%0D%0A++++++++++%5B-117.184%2C+34.0564%5D%2C%0D%0A++++++++++%5B-117.184%2C+34.0486%5D%2C%0D%0A++++++++++%5B-117.1956%2C+34.0486%5D%2C%0D%0A++++++++++%5B-117.1956%2C+34.0564%5D%0D%0A++++++++%5D%0D%0A++++++%5D%0D%0A++++%7D%0D%0A++%5D%0D%0A%7D%0D%0A"
+						},
+						{
+							"key": "geometry",
+							"value": "%7B%0D%0A++%22geometryType%22%3A+%22esriGeometryPolygon%22%2C%0D%0A++%22geometry%22%3A+%7B%0D%0A++++%22rings%22%3A+%5B%0D%0A++++++%5B%0D%0A++++++++%5B-117.190%2C+34.054%5D%2C%0D%0A++++++++%5B-117.182%2C+34.054%5D%2C%0D%0A++++++++%5B-117.182%2C+34.050%5D%2C%0D%0A++++++++%5B-117.190%2C+34.050%5D%2C%0D%0A++++++++%5B-117.190%2C+34.054%5D%0D%0A++++++%5D%0D%0A++++%5D%0D%0A++%7D%0D%0A%7D%0D%0A"
+						},
+						{
+							"key": "f",
+							"value": "json"
+						},
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				},
+				"description": "Documentation available [here](https://developers.arcgis.com/rest/services-reference/enterprise/intersect/)"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "password",
+			"value": "bla"
+		},
+		{
+			"key": "username",
+			"value": "bla"
+		},
+		{
+			"key": "token",
+			"value": "bla"
+		}
+	]
+}
