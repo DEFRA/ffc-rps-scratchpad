@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALB Checker</title>
+</head>
+
+<body>
+    <h1>Enter text from which to extract eligibility rules</h1>
+
+    <p style="color: rgb(185, 15, 0)">This tool will submit your text to OpenAI. It is your responsibility to ensure
+        that the material you submit is appropriate for this. It is not possible for this tool to identify non-compliant
+        material.</p>
+
+    <h1 <!-- Form that submits directly to the FastAPI endpoint -->
+        <form action="/xtractor" method="POST">
+            <label for="textInput">Enter text:</label><br><br>
+            <!-- <input type="text" id="textInput" name="text" required><br><br> -->
+            <textarea id="textInput" name="text" rows="50" cols="132" required></textarea><br>
+            <button type="submit">Submit</button>
+        </form>
+
+        <!-- The result will be displayed after form submission -->
+
+</body>
+
+</html>
