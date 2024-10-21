@@ -31,26 +31,27 @@ block-beta
 
 ```mermaid
 sequenceDiagram
-actor Applicant
-participant UI
-participant Orchestration
-participant Calculation
-activate Applicant
-Applicant->>UI: Start Application
-activate Orchestration
-UI-)Orchestration: New Application
-activate Calculation
-Orchestration->>Calculation: Get Available Area
-Calculation->>Orchestration: Available Area
-deactivate Calculation
-Orchestration-)UI: Action Area Required
-UI->>Applicant: Display AA 
-deactivate Orchestration
-deactivate Applicant
-Applicant->>UI: Choose area for action 
+actor applicant as Applicant
+participant ui as UI
+participant orchestration as Orchestration
+participant calculation as Calculation Service
+
+applicant->>ui: start application
+applicant->>ui: select land parcel
+applicant->>ui: select action 
+activate orchestration
+ui-)orchestration: new application
+activate calculation
+orchestration->>calculation: get available area
+calculation->>orchestration: available area
+deactivate calculation
+orchestration-)ui: action area required
+ui->>applicant: display available area 
+deactivate orchestration
+applicant->>ui: choose area for action 
 ```
 
-# For demo
+# For PoC
 ## Architecture
 
 ```mermaid
@@ -60,7 +61,7 @@ block-beta
     AppForm["Application Form UI"]
     space:3
 
-    Calculation["Calculation"]
+    Calculation["Calculation Service"]
 
     AppForm ----> Calculation
 
@@ -70,16 +71,40 @@ block-beta
 
 ```mermaid
 sequenceDiagram
-actor Applicant
+actor applicant as Applicant
+participant ui as UI
+participant calculation as Calculation Service
 
-Applicant->>UI: Start Application
-UI->>Calculation: Get Land Parcels
-Applicant->>UI: Select actions
-Applicant->>UI: Select Parcel
-UI->>Calculation: Get Available Area
-UI->>Applicant: Display AA
-Calculation->>UI: Available
-Applicant->>UI: Choose area for action
-Applicant->>UI: Apply
+applicant->>ui: start application
 
+activate calculation
+ui->>calculation: get land parcels
+calculation->>ui: land parcels
+deactivate calculation
+
+ui->>applicant: show land parcel selector
+applicant->>ui: select parcel
+
+activate calculation
+ui->>calculation: get actions
+calculation->>ui: actions
+deactivate calculation
+
+ui->>applicant: show action selector
+applicant->>ui: select action
+
+activate calculation
+ui->>calculation: get available area
+calculation->>ui: available area
+deactivate calculation
+
+ui->>applicant: display available area
+applicant->>ui: choose area for action
+
+activate calculation
+ui->>calculation: calculate payment 
+calculation->>ui: payment amount
+deactivate calculation
+
+ui->>applicant: display payment owed
 ```

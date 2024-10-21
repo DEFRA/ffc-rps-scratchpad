@@ -1,14 +1,28 @@
 {
 	"info": {
-		"_postman_id": "fea94c50-2fda-4350-8606-80caa14eda62",
+		"_postman_id": "09b947c3-d72d-45ce-8c85-1cf472da1aef",
 		"name": "ArcGIS",
-		"description": "## Overview\n\nThis collection provides calls to the Geometry service to get -\n\n- the areas and lengths of a given array of polygons\\*\n    \n- the remaining area/s left over from an intersection of a given polygon over an existing array of polygons\n    \n\nGET endpoints are given in this collection for these, although POSTs are available.\n\nNote the query parameters are url encoded [https://www.url-encode-decode.com/](https://www.url-encode-decode.com/) can help with this. The advantage of using a GET is that the request can be posted into a URL where ArcGIS visualises the inputs into a form.\n\n<img src=\"https://content.pstmn.io/7e8966f1-7b9f-4fb5-8604-5e053825b0c0/Z2VvbWV0cnkgc2VydmVyLnBuZw==\" alt=\"\">\n\n## Public vs organisation specific URLs\n\nThe URLs used by these requests are from the ArcGIS **public** API e.g.\n\n[https://utility.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer/intersect](https://utility.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer/intersect)\n\nThese do not require authentication and are intended for open non/limited commercial use.\n\nA 'self' endpoint is included in the collection which is organisation specific and requires a token. Organisation specific endpoints require authentication e.g\n\n[https://my-org.maps.arcgis.com/arcgis/rest/services/Geometry/GeometryServer/intersect](https://my-org.maps.arcgis.com/arcgis/rest/services/Geometry/GeometryServer/intersect)\n\nThese are more performant and are designed for commercial use. They can also access private data within the organisation account.\n\n[link to developer documentation](https://developers.arcgis.com/documentation/)",
+		"description": "## Overview\n\nThis collection provides calls to the Geometry service to get -\n\n- the areas and lengths of a given array of polygons\\*\n- the remaining area/s left over from an intersection of a given polygon over an existing array of polygons\n    \n\nGET endpoints are given in this collection for these, although POSTs are available.\n\nNote the query parameters are url encoded [https://www.url-encode-decode.com/](https://www.url-encode-decode.com/) can help with this. The advantage of using a GET is that the request can be posted into a URL where ArcGIS visualises the inputs into a form.\n\n<img src=\"https://content.pstmn.io/7e8966f1-7b9f-4fb5-8604-5e053825b0c0/Z2VvbWV0cnkgc2VydmVyLnBuZw==\">\n\n## Public vs organisation specific URLs\n\nThe URLs used by these requests are from the ArcGIS **public** API e.g.\n\n[https://utility.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer/intersect](https://utility.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer/intersect)\n\nThese do not require authentication and are intended for open non/limited commercial use.\n\nA 'self' endpoint is included in the collection which is organisation specific and requires a token. Organisation specific endpoints require authentication e.g\n\n[https://my-org.maps.arcgis.com/arcgis/rest/services/Geometry/GeometryServer/intersect](https://my-org.maps.arcgis.com/arcgis/rest/services/Geometry/GeometryServer/intersect)\n\nThese are more performant and are designed for commercial use. They can also access private data within the organisation account.\n\n[link to developer documentation](https://developers.arcgis.com/documentation/)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "8442851"
+		"_exporter_id": "20366177",
+		"_collection_link": "https://defra-future-rps.postman.co/workspace/DEFRA~51372925-b46f-4da4-89c2-ae52ff80fe4b/collection/8442851-09b947c3-d72d-45ce-8c85-1cf472da1aef?action=share&source=collection_link&creator=20366177"
 	},
 	"item": [
 		{
 			"name": "Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(pm.response.text());",
+							"pm.environment.set(\"arcgis_access_token\", jsonData.token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -17,12 +31,12 @@
 					"formdata": [
 						{
 							"key": "username",
-							"value": "{{username}}",
+							"value": "bill.sclater_defra",
 							"type": "text"
 						},
 						{
 							"key": "password",
-							"value": "{{password}}",
+							"value": "BigRedTractor8!",
 							"type": "text"
 						},
 						{
@@ -61,10 +75,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://psicomheavyindus.maps.arcgis.com/sharing/rest/content/users/farmer_johnny?f=json&token={{token}}",
+					"raw": "https://defra.maps.arcgis.com/sharing/rest/content/users/bill.sclater_defra?f=json&token=mzFcMRqhxzPAoRJavp2MJhXLLQhOygSsDx9owAgju3DoPIR_r8KTC9W4IpqkqRg73iAs_ynbR0LTy59oxzWQFHQe1LrqDFuEzFL8rWjrbIfXBzmM3NZ2EJ9p0BZ9dXE3Iw7jF_CTc1X3Cu6w2MFBm0pat31DHialZvgSnN-N5Vo.",
 					"protocol": "https",
 					"host": [
-						"psicomheavyindus",
+						"defra",
 						"maps",
 						"arcgis",
 						"com"
@@ -74,7 +88,7 @@
 						"rest",
 						"content",
 						"users",
-						"farmer_johnny"
+						"bill.sclater_defra"
 					],
 					"query": [
 						{
@@ -83,11 +97,16 @@
 						},
 						{
 							"key": "token",
-							"value": "{{token}}"
+							"value": "mzFcMRqhxzPAoRJavp2MJhXLLQhOygSsDx9owAgju3DoPIR_r8KTC9W4IpqkqRg73iAs_ynbR0LTy59oxzWQFHQe1LrqDFuEzFL8rWjrbIfXBzmM3NZ2EJ9p0BZ9dXE3Iw7jF_CTc1X3Cu6w2MFBm0pat31DHialZvgSnN-N5Vo."
+						},
+						{
+							"key": "bla",
+							"value": null,
+							"disabled": true
 						}
 					]
 				},
-				"description": "add link ere"
+				"description": "add link here"
 			},
 			"response": []
 		},
@@ -189,6 +208,351 @@
 					]
 				},
 				"description": "Documentation available [here](https://developers.arcgis.com/rest/services-reference/enterprise/intersect/)"
+			},
+			"response": []
+		},
+		{
+			"name": "services",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://defra.maps.arcgis.com/sharing/rest/portals/self?f=json&token=mzFcMRqhxzPAoRJavp2MJhXLLQhOygSsDx9owAgju3DoPIR_r8KTC9W4IpqkqRg73iAs_ynbR0LTy59oxzWQFHQe1LrqDFuEzFL8rWjrbIfXBzmM3NZ2EJ9p0BZ9dXE3Iw7jF_CTc1X3Cu6w2MFBm0pat31DHialZvgSnN-N5Vo.",
+					"protocol": "https",
+					"host": [
+						"defra",
+						"maps",
+						"arcgis",
+						"com"
+					],
+					"path": [
+						"sharing",
+						"rest",
+						"portals",
+						"self"
+					],
+					"query": [
+						{
+							"key": "f",
+							"value": "json"
+						},
+						{
+							"key": "token",
+							"value": "mzFcMRqhxzPAoRJavp2MJhXLLQhOygSsDx9owAgju3DoPIR_r8KTC9W4IpqkqRg73iAs_ynbR0LTy59oxzWQFHQe1LrqDFuEzFL8rWjrbIfXBzmM3NZ2EJ9p0BZ9dXE3Iw7jF_CTc1X3Cu6w2MFBm0pat31DHialZvgSnN-N5Vo."
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get actions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/action?parcel-id=10169&land-use-codes=AC32",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"action"
+					],
+					"query": [
+						{
+							"key": "parcel-id",
+							"value": "10169"
+						},
+						{
+							"key": "land-use-codes",
+							"value": "AC32"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API Token ",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "client_id",
+							"value": "5FKOkwoff8kfLm7P",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "4491cebdddb949e3a02d1b214afd5eca",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://www.arcgis.com/sharing/rest/oauth2/token",
+					"protocol": "https",
+					"host": [
+						"www",
+						"arcgis",
+						"com"
+					],
+					"path": [
+						"sharing",
+						"rest",
+						"oauth2",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SSSIs",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "https://dservices.arcgis.com/JJzESW51TqeY9uat/arcgis/services/SSSIs/WFSServer?service=wfs&request=getcapabilities&token={{arcgis_access_token}}&f=json",
+					"protocol": "https",
+					"host": [
+						"dservices",
+						"arcgis",
+						"com"
+					],
+					"path": [
+						"JJzESW51TqeY9uat",
+						"arcgis",
+						"services",
+						"SSSIs",
+						"WFSServer"
+					],
+					"query": [
+						{
+							"key": "service",
+							"value": "wfs"
+						},
+						{
+							"key": "request",
+							"value": "getcapabilities"
+						},
+						{
+							"key": "token",
+							"value": "{{arcgis_access_token}}"
+						},
+						{
+							"key": "f",
+							"value": "json"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Land Parcels",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dservices.arcgis.com/JJzESW51TqeY9uat/arcgis/services/Land_Parcels/WFSServer?service=wfs&request=getcapabilities&token={{arcgis_access_token}}",
+					"protocol": "https",
+					"host": [
+						"dservices",
+						"arcgis",
+						"com"
+					],
+					"path": [
+						"JJzESW51TqeY9uat",
+						"arcgis",
+						"services",
+						"Land_Parcels",
+						"WFSServer"
+					],
+					"query": [
+						{
+							"key": "service",
+							"value": "wfs"
+						},
+						{
+							"key": "request",
+							"value": "getcapabilities"
+						},
+						{
+							"key": "token",
+							"value": "{{arcgis_access_token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Land Cover",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dservices.arcgis.com/JJzESW51TqeY9uat/arcgis/services/Land_Covers/WFSServer?service=wfs&request=getcapabilities&token={{arcgis_access_token}}",
+					"protocol": "https",
+					"host": [
+						"dservices",
+						"arcgis",
+						"com"
+					],
+					"path": [
+						"JJzESW51TqeY9uat",
+						"arcgis",
+						"services",
+						"Land_Covers",
+						"WFSServer"
+					],
+					"query": [
+						{
+							"key": "service",
+							"value": "wfs"
+						},
+						{
+							"key": "request",
+							"value": "getcapabilities"
+						},
+						{
+							"key": "token",
+							"value": "{{arcgis_access_token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Moorland",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dservices.arcgis.com/JJzESW51TqeY9uat/arcgis/services/Land_Covers/WFSServer?service=wfs&request=getcapabilities&token={{arcgis_access_token}}",
+					"protocol": "https",
+					"host": [
+						"dservices",
+						"arcgis",
+						"com"
+					],
+					"path": [
+						"JJzESW51TqeY9uat",
+						"arcgis",
+						"services",
+						"Land_Covers",
+						"WFSServer"
+					],
+					"query": [
+						{
+							"key": "service",
+							"value": "wfs"
+						},
+						{
+							"key": "request",
+							"value": "getcapabilities"
+						},
+						{
+							"key": "token",
+							"value": "{{arcgis_access_token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Hedges",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dservices.arcgis.com/JJzESW51TqeY9uat/arcgis/services/Land_Covers/WFSServer?service=wfs&request=getcapabilities&token={{arcgis_access_token}}",
+					"protocol": "https",
+					"host": [
+						"dservices",
+						"arcgis",
+						"com"
+					],
+					"path": [
+						"JJzESW51TqeY9uat",
+						"arcgis",
+						"services",
+						"Land_Covers",
+						"WFSServer"
+					],
+					"query": [
+						{
+							"key": "service",
+							"value": "wfs"
+						},
+						{
+							"key": "request",
+							"value": "getcapabilities"
+						},
+						{
+							"key": "token",
+							"value": "{{arcgis_access_token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Species",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dservices.arcgis.com/JJzESW51TqeY9uat/arcgis/services/Land_Covers/WFSServer?service=wfs&request=getcapabilities&token={{arcgis_access_token}}",
+					"protocol": "https",
+					"host": [
+						"dservices",
+						"arcgis",
+						"com"
+					],
+					"path": [
+						"JJzESW51TqeY9uat",
+						"arcgis",
+						"services",
+						"Land_Covers",
+						"WFSServer"
+					],
+					"query": [
+						{
+							"key": "service",
+							"value": "wfs"
+						},
+						{
+							"key": "request",
+							"value": "getcapabilities"
+						},
+						{
+							"key": "token",
+							"value": "{{arcgis_access_token}}"
+						}
+					]
+				}
 			},
 			"response": []
 		}
